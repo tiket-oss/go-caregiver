@@ -1,0 +1,5 @@
+# Ignore binary
+gorunner
+
+# ignore configuration
+config.json
