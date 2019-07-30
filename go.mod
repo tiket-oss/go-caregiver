@@ -1,4 +1,4 @@
-module github.com/tiket-libre/go-runner
+module github.com/tiket-libre/go-caregiver
 
 go 1.12
 

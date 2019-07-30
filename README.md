@@ -1,13 +1,13 @@
-# Go-Runner
+# Go-Caregiver
 
-Go-Runner wraps an application with log rotation capability and provide environment variables via configuration file.
+Go-Caregiver wraps an application with log rotation capability and provide environment variables via configuration file.
 
 ## Installation
 
 To install this application, make sure you have go installed in your machine, and run the following command:
 
 ```sh
-go get -v github.com/tiket-libre/go-runner
+go get -v github.com/tiket-libre/go-caregiver
 ```
 
 ## Examples
@@ -16,7 +16,7 @@ Suppose you have a binary to run your web application called `dummy-server`, and
 
 ### Configuration
 
-Go-Runner aims to help operations on running said application using a file, containing the application's variables, and how the log rotation policy should be. A sample configuration will look like this.
+Go-Caregiver aims to help operations on running said application using a file, containing the application's variables, and how the log rotation policy should be. A sample configuration will look like this.
 
 ```json
 {
@@ -37,8 +37,8 @@ Go-Runner aims to help operations on running said application using a file, cont
 
 ### Usage
 
-To run go-runner, provide the path to configuration file using the `CONFIG` variable and then pass any command you want to wrap after the `go-runner` command.
+To run go-caregiver, provide the path to configuration file using the `CONFIG` variable and then pass any command you want to wrap after the `go-caregiver` command.
 
 ```sh
-CONFIG=config.json go-runner dummy-server
+CONFIG=config.json go-caregiver dummy-server
 ```
