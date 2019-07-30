@@ -7,7 +7,7 @@ Go-Runner wraps an application with log rotation capability and provide environm
 To install this application, make sure you have go installed in your machine, and run the following command:
 
 ```sh
-go get github.com/tiket-libre/go-runner
+go get -v github.com/tiket-libre/go-runner
 ```
 
 ## Examples
@@ -37,8 +37,8 @@ Go-Runner aims to help operations on running said application using a file, cont
 
 ### Usage
 
-To run go-runner, provide the path to configuration file using the `CONFIG` variable and then pass any command you want to wrap after the `gorunner` command.
+To run go-runner, provide the path to configuration file using the `CONFIG` variable and then pass any command you want to wrap after the `go-runner` command.
 
 ```sh
-CONFIG=config.json gorunner dummy-server
+CONFIG=config.json go-runner dummy-server
 ```
