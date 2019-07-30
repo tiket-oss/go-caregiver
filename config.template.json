@@ -5,6 +5,10 @@
         "key3": 15.5182379128379123
     },
     "log": {
-        
+        "filename": "output.log",
+        "maxsize": 10,
+        "maxbackups": 0,
+        "maxage": 0,
+        "compress": false
     }
 }

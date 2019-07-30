@@ -1,16 +1,31 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 	"strconv"
+
+	"gopkg.in/natefinch/lumberjack.v2"
 )
+
+type serviceConfig struct {
+	Service map[string]interface{} `json:"service"`
+	Log     *logConfig             `json:"log"`
+}
+
+type logConfig struct {
+	Destination string `json:"filename"`
+	MaxSize     int    `json:"maxsize"`
+	MaxBackups  int    `json:"maxbackups"`
+	MaxAge      int    `json:"maxage"`
+	Compress    bool   `json:"compress"`
+}
 
 func main() {
 	command := os.Args[1:]
@@ -21,12 +36,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var config map[string]interface{}
+	var config serviceConfig
 	if err := json.Unmarshal(configRaw, &config); err != nil {
 		log.Fatal(err)
 	}
 
-	for key, value := range config["service"].(map[string]interface{}) {
+	for key, value := range config.Service {
 		value, err := toString(value)
 		if err != nil {
 			log.Fatal(err)
@@ -36,14 +51,26 @@ func main() {
 	}
 
 	cmd := exec.Command(command[0], command[1:]...)
-	var buf bytes.Buffer
-	cmd.Stdout = &buf
+
+	var writer io.Writer
+	if config.Log != nil {
+		writer = &lumberjack.Logger{
+			Filename:   config.Log.Destination,
+			MaxSize:    config.Log.MaxSize,
+			MaxBackups: config.Log.MaxBackups,
+			MaxAge:     config.Log.MaxAge,
+			Compress:   config.Log.Compress,
+		}
+	} else {
+		writer = os.Stdout // stdout main process
+	}
+
+	cmd.Stdout = writer
+	cmd.Stderr = writer
 
 	if err := cmd.Run(); err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Printf("%s", buf.String())
 }
 
 func toString(i interface{}) (string, error) {
