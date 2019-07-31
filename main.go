@@ -20,11 +20,11 @@ type serviceConfig struct {
 }
 
 type logConfig struct {
-	Destination string `json:"filename"`
-	MaxSize     int    `json:"maxsize"`
-	MaxBackups  int    `json:"maxbackups"`
-	MaxAge      int    `json:"maxage"`
-	Compress    bool   `json:"compress"`
+	Filename   string `json:"filename"`
+	MaxSize    int    `json:"maxsizemb"`
+	MaxBackups int    `json:"maxbackups"`
+	MaxAge     int    `json:"maxagedays"`
+	Compress   bool   `json:"compress"`
 }
 
 func main() {
@@ -55,7 +55,7 @@ func main() {
 	var writer io.Writer
 	if config.Log != nil {
 		writer = &lumberjack.Logger{
-			Filename:   config.Log.Destination,
+			Filename:   config.Log.Filename,
 			MaxSize:    config.Log.MaxSize,
 			MaxBackups: config.Log.MaxBackups,
 			MaxAge:     config.Log.MaxAge,
