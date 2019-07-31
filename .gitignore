@@ -1,5 +1,5 @@
 # Ignore binary
-gorunner
+go-caregiver
 
 # ignore configuration
 config.json
